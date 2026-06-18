@@ -1,0 +1,4 @@
+mingw64/
+.vscode/
+test/
+*.exe
