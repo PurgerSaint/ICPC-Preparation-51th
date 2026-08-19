@@ -10,28 +10,25 @@ ll solve() {
     map<ll, vector<ll>> mp;
     for (int i = 0; i < m; i++) {
         ll u, v; cin >> u >> v;
-        if (u == v) continue;
+        // if (u == v) continue;
         mp[u].push_back(v);
     }
-    ll last = 0, cnt = n;
-    // set<ll> st;
-    for (auto it = mp.rbegin(); it != mp.rend(); it++) {
-        vector<ll>& gk = (*it).second;
-        const ll& i = (*it).first;
-        if (gk.empty()) continue;
-        sort(range(gk));
-        ll start = max(last, i);
-        for (ll& t: gk) {
-            if (t > start) {
-                start++;
-                cnt--;
+    ll cnt = n;
+    multiset<ll> st;
+    for (auto& [_, p]: mp)
+        sort(range(p));
+    for (auto it = mp.begin(); it != mp.end(); it++) {
+        auto& [left, p] = *it;
+        for (ll& t: p) st.insert(t);
+        ll end = (it == prev(mp.end())) ? n : ((*next(it)).first);
+        for (ll pos = left; pos < end; pos++) {
+            while (!st.empty() && *st.begin() <= pos) {
+                st.erase(st.begin());
             }
+            if (st.empty()) break;
+            cnt--;
+            st.erase(st.begin());
         }
-        // for (ll i = start + 1; i < last; i++)
-            // st.insert(i);
-        // cout << i << " " << start << " ";
-        last = start;
-        // cout << start << "\n";
     }
     return cnt;
 }
