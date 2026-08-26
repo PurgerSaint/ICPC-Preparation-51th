@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+using namespace std;
+using ll = long long;
+#define ios ios::sync_with_stdio(0);cin.tie(0);
+#define range(a) a.begin(), a.end()
+#define mod(t, m) ((t) % m + m) % m
+
+
+
+int main() {
+    ios;
+    int n; cin >> n;
+    multiset<int> st;
+    while (n--) {
+        int k, h; cin >> k >> h;
+        if (k == 1) st.insert(h);
+        else {
+            while (!st.empty() && *(st.begin()) <= h)
+                st.erase(st.begin());
+        }
+        cout << st.size() << (n ? "\n" : "");
+    }
+    return 0;
+}
